@@ -31,7 +31,7 @@ Build the scrollable content area with the achievement card and lists.
 - [x] **Task: Action Challenge List** acacf3c
     - [ ] Write tests for challenge item rendering.
     - [ ] Implement the section with filter buttons and challenge cards.
-- [ ] **Task: Emotional Report Card**
+- [x] **Task: Emotional Report Card** 937f4d6
     - [ ] Write tests for the report card structure.
     - [ ] Implement the simplified bar graph and action button.
 - [ ] **Task: Conductor - User Manual Verification 'Dashboard & Content' (Protocol in workflow.md)**
