@@ -1,6 +1,6 @@
 # Implementation Plan: Implement the Core UI Layout and Edge-to-Edge Support in MainActivity
 
-## Phase 1: Foundation & Theme
+## Phase 1: Foundation & Theme [checkpoint: b1298ec]
 Establish the core visual building blocks and ensure system-level UI integration.
 
 - [x] **Task: Define Colors and Typography** bd96223
@@ -9,7 +9,7 @@ Establish the core visual building blocks and ensure system-level UI integration
 - [x] **Task: Robust Edge-to-Edge Support** 23deb79
     - [ ] Implement `enableEdgeToEdge()` in `MainActivity.kt`.
     - [ ] Add inset handling for the main container.
-- [ ] **Task: Conductor - User Manual Verification 'Foundation & Theme' (Protocol in workflow.md)**
+- [x] **Task: Conductor - User Manual Verification 'Foundation & Theme' (Protocol in workflow.md)** b1298ec
 
 ## Phase 2: Shell Layout
 Implement the sticky header and bottom navigation bar.
