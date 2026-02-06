@@ -32,4 +32,10 @@ class MainActivityTest {
     fun bottomNavigation_isDisplayed() {
         onView(withId(R.id.bottomNavigation)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun achievementCard_isDisplayed() {
+        onView(withId(R.id.cardAchievementSummary)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvAchievementTitle)).check(matches(isDisplayed()))
+    }
 }
