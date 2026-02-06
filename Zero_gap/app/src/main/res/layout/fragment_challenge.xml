@@ -53,12 +53,21 @@
                 app:cardBackgroundColor="#111827">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="오늘의 멘탈 에너지" android:textColor="#9CA3AF" android:textSize="12sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="75% 안정적임" android:textColor="@color/white" android:textSize="22sp" android:textStyle="bold" android:layout_marginTop="4dp"/>
+                    <TextView 
+                        android:id="@+id/tvMentalEnergy"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:text="0% 측정 중" 
+                        android:textColor="@color/white" 
+                        android:textSize="22sp" 
+                        android:textStyle="bold" 
+                        android:layout_marginTop="4dp"/>
                     <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/indicatorMentalEnergy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:progress="75"
+                        android:progress="0"
                         app:trackColor="#1F2937"
                         app:indicatorColor="@color/white"
                         app:trackThickness="8dp"
@@ -88,7 +97,12 @@
                 <com.google.android.material.tabs.TabItem android:text="탐색" />
             </com.google.android.material.tabs.TabLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="vertical">
+            <LinearLayout 
+                android:id="@+id/challengeListContainer"
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content" 
+                android:layout_marginTop="16dp" 
+                android:orientation="vertical">
                 <include layout="@layout/item_challenge" />
                 <include layout="@layout/item_challenge" />
             </LinearLayout>

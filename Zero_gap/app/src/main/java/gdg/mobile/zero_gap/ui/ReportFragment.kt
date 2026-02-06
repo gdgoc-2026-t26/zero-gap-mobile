@@ -11,9 +11,17 @@ import android.graphics.Color
 import android.view.Gravity
 import android.widget.TextView
 
+import androidx.lifecycle.lifecycleScope
+import gdg.mobile.zero_gap.data.network.NetworkClient
+import gdg.mobile.zero_gap.data.model.EmotionDTO
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+
 class ReportFragment : Fragment() {
     private var _binding: FragmentReportBinding? = null
     private val binding get() = _binding!!
+    private var monthlyEmotions: Map<Int, EmotionDTO> = emptyMap()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,38 +34,51 @@ class ReportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCalendar()
+        fetchData()
+    }
+
+    private fun fetchData() {
+        // Mocking February 2026 range
+        val startDate = "2026-02-01"
+        val endDate = "2026-02-28"
+        
+        lifecycleScope.launch {
+            try {
+                val response = NetworkClient.apiService.getEmotions(startDate, endDate)
+                monthlyEmotions = response.emotions.associateBy { dto ->
+                    // Extract day from YYYY-MM-DD
+                    dto.date.split("-").last().toInt()
+                }
+                setupCalendar()
+            } catch (e: Exception) {
+                // Handle error
+                setupCalendar() // Still setup with defaults
+            }
+        }
     }
 
     private fun setupCalendar() {
         val grid = binding.calendarGrid
         val days = (1..28).toList() // Mockup for February
         
-        // Mock data: Day to Emotion Score (1-5)
-        val mockScores = mapOf(
-            7 to 5,
-            10 to 3,
-            14 to 1,
-            20 to 4,
-            25 to 2
-        )
-        
         grid.removeAllViews()
         
         for (day in days) {
+            val emotion = monthlyEmotions[day]
+            val score = emotion?.score
+            
             val cellLayout = android.widget.LinearLayout(requireContext()).apply {
                 orientation = android.widget.LinearLayout.VERTICAL
                 gravity = Gravity.CENTER
                 setPadding(0, 16, 0, 16)
                 
-                // Add click feedback
                 stateListAnimator = android.animation.AnimatorInflater.loadStateListAnimator(
                     requireContext(), 
                     gdg.mobile.zero_gap.R.animator.click_feedback
                 )
                 
                 setOnClickListener {
-                    updateDiaryForDate(day, mockScores[day])
+                    updateDiaryForDate(day, emotion)
                 }
             }
 
@@ -65,21 +86,15 @@ class ReportFragment : Fragment() {
                 text = day.toString()
                 gravity = Gravity.CENTER
                 textSize = 14f
-                setTextColor(if (day == 7) Color.WHITE else Color.BLACK)
-                if (day == 7) {
-                    setBackgroundResource(gdg.mobile.zero_gap.R.drawable.bg_stat_item)
-                    backgroundTintList = android.content.res.ColorStateList.valueOf(
-                        requireContext().getColor(gdg.mobile.zero_gap.R.color.indigo_600)
-                    )
-                }
+                setTextColor(Color.BLACK)
             }
             
             cellLayout.addView(textView)
 
             // Add emotion icon if score exists
-            mockScores[day]?.let { score ->
+            score?.let { s ->
                 val iconView = android.widget.ImageView(requireContext()).apply {
-                    val iconRes = when (score) {
+                    val iconRes = when (s) {
                         1 -> gdg.mobile.zero_gap.R.drawable.ic_emotion_1
                         2 -> gdg.mobile.zero_gap.R.drawable.ic_emotion_2
                         3 -> gdg.mobile.zero_gap.R.drawable.ic_emotion_3
@@ -92,7 +107,6 @@ class ReportFragment : Fragment() {
                     layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
                         topMargin = (4 * resources.displayMetrics.density).toInt()
                     }
-                    // Apply tint
                     imageTintList = android.content.res.ColorStateList.valueOf(
                         requireContext().getColor(gdg.mobile.zero_gap.R.color.indigo_500)
                     )
@@ -109,13 +123,12 @@ class ReportFragment : Fragment() {
         }
     }
 
-    private fun updateDiaryForDate(day: Int, score: Int? = null) {
+    private fun updateDiaryForDate(day: Int, emotion: EmotionDTO? = null) {
         binding.tvSelectedDate.text = "2026.02.${String.format("%02d", day)}"
         
-        // Update Icon
-        if (score != null) {
+        if (emotion != null) {
             binding.ivDiaryEmotion.visibility = View.VISIBLE
-            val iconRes = when (score) {
+            val iconRes = when (emotion.score) {
                 1 -> gdg.mobile.zero_gap.R.drawable.ic_emotion_1
                 2 -> gdg.mobile.zero_gap.R.drawable.ic_emotion_2
                 3 -> gdg.mobile.zero_gap.R.drawable.ic_emotion_3
@@ -127,16 +140,12 @@ class ReportFragment : Fragment() {
             binding.ivDiaryEmotion.imageTintList = android.content.res.ColorStateList.valueOf(
                 requireContext().getColor(gdg.mobile.zero_gap.R.color.indigo_600)
             )
+            binding.tvDiaryQuote.text = "\"기록은 당신의 성장을 증명합니다.\""
+            binding.tvDiaryContent.text = emotion.description
         } else {
             binding.ivDiaryEmotion.visibility = View.GONE
-        }
-
-        if (day == 7) {
-            binding.tvDiaryQuote.text = "\"조금 늦어도 괜찮아요. 당신의 계절은 반드시 올 거예요.\""
-            binding.tvDiaryContent.text = "오늘은 코테 문제를 풀었다. 생각보다 잘 풀려서 기분이 좋았다. 내일도 오늘처럼만 했으면 좋겠다."
-        } else {
-            binding.tvDiaryQuote.text = if (score != null) "\"오늘 하루도 수고 많으셨습니다.\"" else "\"도전한 것 자체가 큰 발걸음입니다.\""
-            binding.tvDiaryContent.text = if (score != null) "기록된 일기가 여기에 표시됩니다. 감정 점수: ${score}점" else "기록이 없습니다. 새로운 감정을 채워보세요."
+            binding.tvDiaryQuote.text = "\"기록이 없는 날은 새로운 시작을 준비하는 날입니다.\""
+            binding.tvDiaryContent.text = "기록이 없습니다. 새로운 감정을 채워보세요."
         }
     }
 

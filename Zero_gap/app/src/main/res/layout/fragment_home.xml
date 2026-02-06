@@ -155,10 +155,11 @@
                             android:textColor="#A5B4FC"
                             android:textSize="10sp" />
                         <TextView
+                            android:id="@+id/tvCompletedMissions"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="12개"
+                            android:text="0개"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -178,10 +179,11 @@
                             android:textColor="#A5B4FC"
                             android:textSize="10sp" />
                         <TextView
+                            android:id="@+id/tvAverageEmotion"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="4.2"
+                            android:text="0.0"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -201,21 +203,24 @@
                             android:textColor="#A5B4FC"
                             android:textSize="10sp" />
                         <LinearLayout
+                            android:id="@+id/layoutTodaySuccess"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
                             <ImageView
+                                android:id="@+id/imgTodaySuccess"
                                 android:layout_width="12dp"
                                 android:layout_height="12dp"
                                 android:src="@drawable/ic_check_circle"
                                 app:tint="#34D399" />
                             <TextView
+                                android:id="@+id/tvTodaySuccess"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="YES"
+                                android:text="NO"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -322,6 +327,7 @@
                         app:selectionRequired="true">
 
                         <com.google.android.material.chip.Chip
+                            android:id="@+id/chip5m"
                             style="@style/Widget.Zero_gap.Chip.Small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -330,6 +336,7 @@
                             app:checkedIconVisible="false" />
 
                         <com.google.android.material.chip.Chip
+                            android:id="@+id/chip30m"
                             style="@style/Widget.Zero_gap.Chip.Small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -337,6 +344,7 @@
                             android:text="20-30분" />
 
                         <com.google.android.material.chip.Chip
+                            android:id="@+id/chip1h"
                             style="@style/Widget.Zero_gap.Chip.Small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -347,9 +355,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- Challenge Items -->
+                <!-- Action Challenge Card -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardChallenge1"
+                    android:id="@+id/cardChallengeAction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
@@ -358,14 +366,12 @@
                     app:cardElevation="0dp"
                     app:strokeWidth="1dp"
                     app:strokeColor="#F3F4F6">
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="16dp">
-
                         <FrameLayout
-                            android:id="@+id/challengeIcon1"
+                            android:id="@+id/iconAction"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:background="@drawable/bg_stat_item"
@@ -373,7 +379,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent">
-
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
@@ -381,40 +386,138 @@
                                 android:src="@drawable/ic_bolt"
                                 app:tint="#F97316" />
                         </FrameLayout>
-
                         <TextView
-                            android:id="@+id/tvChallenge1"
+                            android:id="@+id/chipChallengeAction"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="코테 1문제 풀기"
+                            android:text="행동 챌린지"
                             android:textColor="@color/slate_900"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            app:layout_constraintStart_toEndOf="@id/challengeIcon1"
-                            app:layout_constraintTop_toTopOf="@id/challengeIcon1" />
-
+                            app:layout_constraintStart_toEndOf="@id/iconAction"
+                            app:layout_constraintTop_toTopOf="@id/iconAction"
+                            app:layout_constraintEnd_toEndOf="parent" />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="뇌 풀기용 쉬운 문제"
+                            android:text="지금 실천하기"
                             android:textColor="@color/slate_800"
                             android:alpha="0.5"
                             android:textSize="11sp"
-                            app:layout_constraintStart_toStartOf="@id/tvChallenge1"
-                            app:layout_constraintTop_toBottomOf="@id/tvChallenge1" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_chevron_right"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:tint="#D1D5DB" />
-
+                            app:layout_constraintStart_toStartOf="@id/chipChallengeAction"
+                            app:layout_constraintTop_toBottomOf="@id/chipChallengeAction" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
 
+                <!-- Emotion Challenge Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardChallengeEmotion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#F3F4F6">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+                        <FrameLayout
+                            android:id="@+id/iconEmotion"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#EEF2FF"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_emotion_3"
+                                app:tint="@color/indigo_600" />
+                        </FrameLayout>
+                        <TextView
+                            android:id="@+id/chipChallengeEmotion"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="감정 챌린지"
+                            android:textColor="@color/slate_900"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/iconEmotion"
+                            app:layout_constraintTop_toTopOf="@id/iconEmotion"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="마음 챙기기"
+                            android:textColor="@color/slate_800"
+                            android:alpha="0.5"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toStartOf="@id/chipChallengeEmotion"
+                            app:layout_constraintTop_toBottomOf="@id/chipChallengeEmotion" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Mindset Challenge Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardChallengeMindset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#F3F4F6">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+                        <FrameLayout
+                            android:id="@+id/iconMindset"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#F0FDF4"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_check_circle"
+                                app:tint="#16A34A" />
+                        </FrameLayout>
+                        <TextView
+                            android:id="@+id/chipChallengeMindset"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="생각 챌린지"
+                            android:textColor="@color/slate_900"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/iconMindset"
+                            app:layout_constraintTop_toTopOf="@id/iconMindset"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="관점 바꾸기"
+                            android:textColor="@color/slate_800"
+                            android:alpha="0.5"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toStartOf="@id/chipChallengeMindset"
+                            app:layout_constraintTop_toBottomOf="@id/chipChallengeMindset" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>

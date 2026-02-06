@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@android:drawable/ic_menu_today"
+        android:icon="@drawable/ic_home"
         android:title="홈" />
     <item
         android:id="@+id/navigation_challenge"
@@ -18,6 +18,6 @@
         android:title="달력" />
     <item
         android:id="@+id/navigation_my"
-        android:icon="@android:drawable/ic_menu_myplaces"
+        android:icon="@drawable/ic_person"
         android:title="마이" />
 </menu>

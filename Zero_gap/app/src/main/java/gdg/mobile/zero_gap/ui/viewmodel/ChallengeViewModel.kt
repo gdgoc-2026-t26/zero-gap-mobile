@@ -3,6 +3,7 @@ package gdg.mobile.zero_gap.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import gdg.mobile.zero_gap.data.model.Challenge
+import gdg.mobile.zero_gap.data.network.NetworkClient
 import gdg.mobile.zero_gap.data.repository.ChallengeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,14 +18,39 @@ class ChallengeViewModel(private val repository: ChallengeRepository) : ViewMode
     private val _selectedChallenge = MutableStateFlow<Challenge?>(null)
     val selectedChallenge: StateFlow<Challenge?> = _selectedChallenge.asStateFlow()
 
-    init {
-        fetchChallenges()
+    private val _recommendations = MutableStateFlow<List<String>>(emptyList())
+    val recommendations: StateFlow<List<String>> = _recommendations.asStateFlow()
+
+    private val _mentalEnergy = MutableStateFlow(0)
+    val mentalEnergy: StateFlow<Int> = _mentalEnergy.asStateFlow()
+
+    fun fetchChallenges(startDate: String, endDate: String) {
+        viewModelScope.launch {
+            repository.getChallenges(startDate, endDate).collect {
+                _challenges.value = it
+            }
+        }
     }
 
-    private fun fetchChallenges() {
+    fun fetchMentalEnergy() {
         viewModelScope.launch {
-            repository.getChallenges().collect {
-                _challenges.value = it
+            try {
+                // Derived from average emotion score * 20 (assuming 1-5 scale)
+                val response = NetworkClient.apiService.getEmotions("2026-02-01", "2026-02-28")
+                val average = if (response.emotions.isNotEmpty()) response.emotions.map { it.score }.average() else 3.0
+                _mentalEnergy.value = (average * 20).toInt().coerceIn(0, 100)
+            } catch (e: Exception) {
+                _mentalEnergy.value = 50
+            }
+        }
+    }
+
+    fun fetchRecommendations(durationMinutes: Int) {
+        viewModelScope.launch {
+            try {
+                _recommendations.value = repository.getRecommendations(durationMinutes)
+            } catch (e: Exception) {
+                // Handle error
             }
         }
     }

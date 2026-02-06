@@ -7,7 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object NetworkClient {
-    private const val BASE_URL = "https://api.zero-gap.com/" // Mock URL
+    private const val BASE_URL = "https://api.zero-gap.com/"
+    private const val USE_MOCK = true // Set to false to use real API
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -25,5 +26,9 @@ object NetworkClient {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val apiService: ApiService = retrofit.create(ApiService::class.java)
+    val apiService: ApiService = if (USE_MOCK) {
+        MockApiService()
+    } else {
+        retrofit.create(ApiService::class.java)
+    }
 }

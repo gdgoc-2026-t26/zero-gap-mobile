@@ -3,38 +3,34 @@ package gdg.mobile.zero_gap.data.repository
 import gdg.mobile.zero_gap.R
 import gdg.mobile.zero_gap.data.model.Challenge
 import gdg.mobile.zero_gap.data.model.ChallengeCategory
+import gdg.mobile.zero_gap.data.network.NetworkClient
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 
 class ChallengeRepository {
 
-    private val mockupChallenges = listOf(
-        Challenge(
-            id = "1",
-            title = "코테 1문제 풀기",
-            description = "뇌 풀기용 쉬운 문제 한 개만 풀어보세요.",
-            iconResId = R.drawable.ic_bolt,
-            category = ChallengeCategory.ACTION
-        ),
-        Challenge(
-            id = "2",
-            title = "오늘의 한 줄 기록",
-            description = "지금 느끼는 감정을 딱 한 줄만 적어보세요.",
-            iconResId = R.drawable.ic_check_circle,
-            category = ChallengeCategory.EMOTION
-        ),
-        Challenge(
-            id = "3",
-            title = "5분 명상",
-            description = "잠시 눈을 감고 호흡에 집중해보세요.",
-            iconResId = R.drawable.ic_bolt,
-            category = ChallengeCategory.MINDSET
-        )
-    )
+    suspend fun getRecommendations(durationMinutes: Int): List<String> {
+        val response = NetworkClient.apiService.getTodayMissionRecommendations(durationMinutes * 60)
+        return response.missionRecommendations
+    }
 
-    fun getChallenges(): Flow<List<Challenge>> = flowOf(mockupChallenges)
+    fun getChallenges(startDate: String, endDate: String): Flow<List<Challenge>> = flow {
+        val response = NetworkClient.apiService.getMissions(startDate, endDate)
+        val challenges = response.missions.map { dto ->
+            Challenge(
+                id = dto.id.toString(),
+                title = dto.name,
+                description = dto.description ?: "",
+                iconResId = R.drawable.ic_bolt,
+                category = ChallengeCategory.ACTION
+            )
+        }
+        emit(challenges)
+    }
 
-    fun getChallengeById(id: String): Challenge? {
-        return mockupChallenges.find { it.id == id }
+    suspend fun completeMission(id: Int, accomplished: Boolean, description: String): String {
+        val request = mapOf("accomplished" to accomplished, "description" to description)
+        val response = NetworkClient.apiService.completeMission(id, request)
+        return response.cheerMessage
     }
 }
