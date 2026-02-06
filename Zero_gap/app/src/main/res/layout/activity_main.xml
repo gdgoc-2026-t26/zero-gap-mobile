@@ -474,10 +474,242 @@
 
             </LinearLayout>
 
-            <!-- Placeholder for next tasks -->
-            <View
+            <!-- Emotional Report Card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardEmotionalReport"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_card_white_rounded"
+                android:padding="24dp">
+
+                <TextView
+                    android:id="@+id/tvReportTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="감정 리포트"
+                    android:textColor="@color/slate_900"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2026.02"
+                    android:textColor="@color/slate_800"
+                    android:alpha="0.4"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tvReportTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvReportTitle" />
+
+                <!-- Simple Week Graph -->
+                <LinearLayout
+                    android:id="@+id/graphLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvReportTitle">
+
+                    <!-- Monday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#E0E7FF" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="월"
+                            android:textColor="#9CA3AF"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Tuesday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#C7D2FE" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="화"
+                            android:textColor="#9CA3AF"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Wednesday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#E0E7FF" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="수"
+                            android:textColor="#9CA3AF"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Today (Thursday) -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="@color/indigo_600" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="오늘"
+                            android:textColor="@color/indigo_600"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Friday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#F3F4F6" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="금"
+                            android:textColor="#9CA3AF"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Saturday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#F3F4F6" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="토"
+                            android:textColor="#9CA3AF"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Sunday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#F3F4F6" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="일"
+                            android:textColor="#9CA3AF"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/quoteLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_report_quote"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/graphLayout">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="오늘의 한 줄 기록"
+                        android:textColor="@color/slate_800"
+                        android:alpha="0.5"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="&quot;조금 불안했지만, 코테 1문제 풀고 나니 뿌듯하다.&quot;"
+                        android:textColor="@color/slate_900"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRecordEmotion"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingVertical="12dp"
+                    android:text="지금 감정 기록하기"
+                    android:textColor="@color/indigo_600"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/quoteLayout"
+                    app:strokeColor="@color/indigo_600" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

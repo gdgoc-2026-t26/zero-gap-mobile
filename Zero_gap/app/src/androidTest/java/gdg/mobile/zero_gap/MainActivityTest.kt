@@ -51,4 +51,11 @@ class MainActivityTest {
         onView(withId(R.id.tvChallenge1)).check(matches(isDisplayed()))
         onView(withId(R.id.tvChallenge2)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun emotionalReport_isDisplayed() {
+        onView(withId(R.id.cardEmotionalReport)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvReportTitle)).check(matches(isDisplayed()))
+        onView(withId(R.id.btnRecordEmotion)).check(matches(isDisplayed()))
+    }
 }
