@@ -17,7 +17,7 @@ Implement the sticky header and bottom navigation bar.
 - [x] **Task: Implement Top App Bar** e72be8b
     - [ ] Write Espresso tests for header visibility and elements.
     - [ ] Create the header layout XML with logo, title, and icons.
-- [ ] **Task: Implement Bottom Navigation Bar**
+- [x] **Task: Implement Bottom Navigation Bar** b305dd7
     - [ ] Write Espresso tests for bottom nav existence and items.
     - [ ] Create the bottom navigation menu and view.
 - [ ] **Task: Conductor - User Manual Verification 'Shell Layout' (Protocol in workflow.md)**
