@@ -3,7 +3,7 @@
 ## Phase 1: Foundation & Theme
 Establish the core visual building blocks and ensure system-level UI integration.
 
-- [ ] **Task: Define Colors and Typography**
+- [x] **Task: Define Colors and Typography** bd96223
     - [ ] Create `colors.xml` with the indigo and slate palette.
     - [ ] Define the base `Theme.Zero_gap` with Material 3.
 - [ ] **Task: Robust Edge-to-Edge Support**
