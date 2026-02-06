@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Implement the Core UI Layout and Edge-to-Edge Support in MainActivity**
+- [x] **Track: Implement the Core UI Layout and Edge-to-Edge Support in MainActivity**
   *Link: [./tracks/main_ui_20260206/](./tracks/main_ui_20260206/)*
