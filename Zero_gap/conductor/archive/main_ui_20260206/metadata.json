@@ -1,0 +1,8 @@
+{
+  "track_id": "main_ui_20260206",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-02-06T19:58:00Z",
+  "updated_at": "2026-02-06T19:58:00Z",
+  "description": "Implement the Core UI Layout and Edge-to-Edge Support in MainActivity based on the HTML prototype."
+}
