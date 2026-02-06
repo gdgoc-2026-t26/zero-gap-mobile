@@ -138,13 +138,17 @@ class MockApiService : ApiService {
         return AuthResponse(token = "mock_token_123", user = UserDTO(1, request.email, "사용자"))
     }
 
+    // Dynamic profile storage
+    private var currentProfile = ProfileDTO("개발자", "성장", "열정적", "몰입", listOf("코딩", "운동"))
+
     override suspend fun getProfile(): ProfileDTO {
         delay(500)
-        return ProfileDTO("개발자", "성장", "열정적", "만취", listOf("코딩", "운동"))
+        return currentProfile
     }
 
     override suspend fun updateProfile(profile: ProfileDTO): AuthResponse {
         delay(500)
+        currentProfile = profile
         return AuthResponse(message = "프로필 업데이트 성공", token = "mock_token_123")
     }
 }

@@ -57,6 +57,30 @@ class AuthViewModel(
         }
     }
 
+    fun signupAndSetupProfile(email: String, name: String, pass: String, profile: ProfileDTO) {
+        viewModelScope.launch {
+            _authState.value = AuthState.Loading
+            try {
+                // 1. Signup
+                val signupResponse = repository.signup(SignupRequest(email, pass, name))
+                val token = signupResponse.token
+                sessionManager.saveAuthToken(token)
+
+                // 2. Update Profile
+                // In real app, make sure interceptor has the new token. 
+                // MockService doesn't check, but we simulate the flow.
+                repository.updateProfile(profile)
+                
+                // 3. Update local profile state
+                _profileState.value = profile
+
+                _authState.value = AuthState.Success(token)
+            } catch (e: Exception) {
+                _authState.value = AuthState.Error(e.message ?: "Signup and setup failed")
+            }
+        }
+    }
+
     fun updateProfile(profile: ProfileDTO) {
         viewModelScope.launch {
             try {
