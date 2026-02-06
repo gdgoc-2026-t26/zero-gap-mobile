@@ -25,12 +25,12 @@ class AuthViewModel(
             _authState.value = AuthState.Loading
             try {
                 val response = repository.signup(UserSignUpRequest(email, pass, name))
-                // UserResponse doesn't have token, normally you'd login after signup or signup returns token
-                // Backend UserResponse doesn't have token based on Swagger, so we might need a separate login call or it depends on backend behavior.
-                // For now, if mock returns UserResponse, we simulate success.
                 _authState.value = AuthState.Success("signup_success_token")
+            } catch (e: retrofit2.HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                _authState.value = AuthState.Error("HTTP ${e.code()}: ${errorBody ?: e.message()}")
             } catch (e: Exception) {
-                _authState.value = AuthState.Error(e.message ?: "signup failed")
+                _authState.value = AuthState.Error("${e.javaClass.simpleName}: ${e.message ?: "signup failed"}")
             }
         }
     }
@@ -42,56 +42,26 @@ class AuthViewModel(
                 val response = repository.login(LoginRequest(email, pass))
                 sessionManager.saveAuthToken(response.accessToken)
                 _authState.value = AuthState.Success(response.accessToken)
+            } catch (e: retrofit2.HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                _authState.value = AuthState.Error("HTTP ${e.code()}: ${errorBody ?: e.message()}")
             } catch (e: Exception) {
-                _authState.value = AuthState.Error(e.message ?: "login failed")
+                _authState.value = AuthState.Error("${e.javaClass.simpleName}: ${e.message ?: "login failed"}")
             }
         }
     }
 
     fun fetchProfile() {
-        viewModelScope.launch {
-            try {
-                val profile = repository.getProfile()
-                _profileState.value = profile
-            } catch (e: Exception) {
-                // handle error
-            }
-        }
+        // Not implemented in current backend
     }
 
     fun signupAndSetupProfile(email: String, name: String, pass: String, profile: ProfileDTO) {
-        viewModelScope.launch {
-            _authState.value = AuthState.Loading
-            try {
-                // 1. Signup
-                val signupResponse = repository.signup(UserSignUpRequest(email, pass, name))
-                // In real world, maybe login after signup to get token
-                val loginResponse = repository.login(LoginRequest(email, pass))
-                val token = loginResponse.accessToken
-                sessionManager.saveAuthToken(token)
-
-                // 2. Update Profile
-                repository.updateProfile(profile)
-                
-                // 3. Update local profile state
-                _profileState.value = profile
-
-                _authState.value = AuthState.Success(token)
-            } catch (e: Exception) {
-                _authState.value = AuthState.Error(e.message ?: "Signup and setup failed")
-            }
-        }
+        // Profile setup not supported in current backend
+        signup(email, name, pass)
     }
 
     fun updateProfile(profile: ProfileDTO) {
-        viewModelScope.launch {
-            try {
-                repository.updateProfile(profile)
-                _profileState.value = profile
-            } catch (e: Exception) {
-                // handle error
-            }
-        }
+        // Not implemented in current backend
     }
 
     sealed class AuthState {

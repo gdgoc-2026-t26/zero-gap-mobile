@@ -2,8 +2,8 @@ package gdg.mobile.zero_gap.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MissionDTO(
-    @SerializedName("id") val id: String? = null, // UUID
+data class MissionResponse(
+    @SerializedName("id") val id: String? = null, // UUID string
     @SerializedName("name") val name: String,
     @SerializedName("date") val date: String,
     @SerializedName("accomplished") val accomplished: Boolean = false,
@@ -30,18 +30,24 @@ data class MissionPatchResponse(
 )
 
 data class MissionListResponse(
-    @SerializedName("missions") val missions: List<MissionDTO>
+    @SerializedName("missions") val missions: List<MissionResponse>
 )
 
 data class MissionRecommendationResponse(
     @SerializedName("missionRecommendations") val missionRecommendations: List<String>
 )
 
-data class EmotionDTO(
-    @SerializedName("id") val id: Int? = null,
+data class EmotionRequest(
     @SerializedName("score") val score: Int,
     @SerializedName("date") val date: String,
-    @SerializedName("description") val description: String
+    @SerializedName("description") val description: String? = null
+)
+
+data class EmotionResponse(
+    @SerializedName("id") val id: Long? = null,
+    @SerializedName("score") val score: Int,
+    @SerializedName("date") val date: String,
+    @SerializedName("description") val description: String? = null
 )
 
 data class EmotionCreateResponse(
@@ -49,12 +55,13 @@ data class EmotionCreateResponse(
 )
 
 data class EmotionListResponse(
-    @SerializedName("emotions") val emotions: List<EmotionDTO>
+    @SerializedName("emotions") val emotions: List<EmotionResponse>
 )
 
 data class SummaryResponse(
     @SerializedName("summary") val summary: String
 )
+
 
 data class UserSignUpRequest(
     @SerializedName("email") val email: String,
@@ -72,9 +79,9 @@ data class LoginResponse(
 )
 
 data class UserResponse(
-    @SerializedName("id") val id: Long,
-    @SerializedName("email") val email: String,
-    @SerializedName("name") val name: String
+    @SerializedName("id") val id: Long? = null,
+    @SerializedName("email") val email: String? = null,
+    @SerializedName("name") val name: String? = null
 )
 
 // Retained current profile DTO as it's not in swagger yet but used in app

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import gdg.mobile.zero_gap.databinding.FragmentDiaryBinding
 
 import androidx.lifecycle.lifecycleScope
-import gdg.mobile.zero_gap.data.model.EmotionDTO
+import gdg.mobile.zero_gap.data.model.EmotionRequest
 import gdg.mobile.zero_gap.data.network.NetworkClient
 import kotlinx.coroutines.launch
 import android.widget.Toast
@@ -53,7 +53,7 @@ class DiaryFragment : Fragment() {
         val content = binding.etContent.text.toString()
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
-        val emotionDTO = EmotionDTO(
+        val emotionRequest = EmotionRequest(
             score = score,
             date = date,
             description = content
@@ -62,7 +62,7 @@ class DiaryFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 binding.btnSave.isEnabled = false
-                NetworkClient.apiService.registerEmotion(emotionDTO)
+                NetworkClient.apiService.registerEmotion(emotionRequest)
                 Toast.makeText(requireContext(), "일기가 저장되었습니다.", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             } catch (e: Exception) {

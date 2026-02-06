@@ -65,8 +65,9 @@ class HomeViewModel : ViewModel() {
                 }
                 _showAlert.value = !recentAchievement
 
-                // 5. Today's diary
-                _todayDiary.value = emotionsResponse.emotions.find { it.date == today }?.description
+                // 5. Today's summary (from backend)
+                val summaryResponse = NetworkClient.apiService.getSummary(startDate, endDate)
+                _todayDiary.value = summaryResponse.summary
 
             } catch (e: Exception) {
                 // Log error

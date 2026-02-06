@@ -13,7 +13,7 @@ import android.widget.TextView
 
 import androidx.lifecycle.lifecycleScope
 import gdg.mobile.zero_gap.data.network.NetworkClient
-import gdg.mobile.zero_gap.data.model.EmotionDTO
+import gdg.mobile.zero_gap.data.model.EmotionResponse
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,7 +21,7 @@ import java.util.*
 class ReportFragment : Fragment() {
     private var _binding: FragmentReportBinding? = null
     private val binding get() = _binding!!
-    private var monthlyEmotions: Map<Int, EmotionDTO> = emptyMap()
+    private var monthlyEmotions: Map<Int, EmotionResponse> = emptyMap()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -123,7 +123,7 @@ class ReportFragment : Fragment() {
         }
     }
 
-    private fun updateDiaryForDate(day: Int, emotion: EmotionDTO? = null) {
+    private fun updateDiaryForDate(day: Int, emotion: EmotionResponse? = null) {
         binding.tvSelectedDate.text = "2026.02.${String.format("%02d", day)}"
         
         if (emotion != null) {

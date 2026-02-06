@@ -10,7 +10,7 @@ import gdg.mobile.zero_gap.databinding.FragmentChallengeBinding
 
 import androidx.lifecycle.lifecycleScope
 import gdg.mobile.zero_gap.data.network.NetworkClient
-import gdg.mobile.zero_gap.data.model.MissionDTO
+import gdg.mobile.zero_gap.data.model.MissionResponse
 import gdg.mobile.zero_gap.databinding.ItemChallengeBinding
 import kotlinx.coroutines.launch
 import android.widget.Toast
@@ -100,7 +100,7 @@ class ChallengeFragment : Fragment() {
         }
     }
 
-    private fun populateMissionList(missions: List<MissionDTO>) {
+    private fun populateMissionList(missions: List<MissionResponse>) {
         val listContainer = binding.root.findViewById<android.widget.LinearLayout>(gdg.mobile.zero_gap.R.id.challengeListContainer) ?: return
         listContainer.removeAllViews()
         
@@ -141,7 +141,7 @@ class ChallengeFragment : Fragment() {
         }
     }
 
-    private fun completeMission(mission: MissionDTO) {
+    private fun completeMission(mission: MissionResponse) {
         val id = mission.id ?: return
         lifecycleScope.launch {
             try {

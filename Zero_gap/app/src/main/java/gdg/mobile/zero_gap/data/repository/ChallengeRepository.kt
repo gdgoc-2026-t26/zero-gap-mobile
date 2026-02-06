@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.flow
 
 class ChallengeRepository {
 
-    suspend fun getRecommendations(duration: String): List<String> {
-        val response = NetworkClient.apiService.getTodayMissionRecommendations(duration)
+    suspend fun getRecommendations(durationInSeconds: Int): List<String> {
+        val response = NetworkClient.apiService.getTodayMissionRecommendations(durationInSeconds)
         return response.missionRecommendations
     }
 
@@ -19,7 +19,7 @@ class ChallengeRepository {
         val response = NetworkClient.apiService.getMissions(startDate, endDate)
         val challenges = response.missions.map { dto ->
             Challenge(
-                id = dto.id.toString(),
+                id = dto.id ?: "",
                 title = dto.name,
                 description = dto.description ?: "",
                 iconResId = R.drawable.ic_bolt,

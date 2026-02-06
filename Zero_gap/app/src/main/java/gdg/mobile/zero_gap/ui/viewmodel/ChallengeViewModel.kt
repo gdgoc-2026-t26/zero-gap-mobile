@@ -49,12 +49,7 @@ class ChallengeViewModel(private val repository: ChallengeRepository) : ViewMode
     fun fetchRecommendations(durationMinutes: Int) {
         viewModelScope.launch {
             try {
-                val durationEnum = when {
-                    durationMinutes <= 10 -> "SHORT"
-                    durationMinutes <= 40 -> "MEDIUM"
-                    else -> "LONG"
-                }
-                _recommendations.value = repository.getRecommendations(durationEnum)
+                _recommendations.value = repository.getRecommendations(durationMinutes * 60)
             } catch (e: Exception) {
                 // Handle error
             }

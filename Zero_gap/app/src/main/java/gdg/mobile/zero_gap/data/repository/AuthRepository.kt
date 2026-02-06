@@ -14,11 +14,4 @@ class AuthRepository {
         return api.login(request)
     }
 
-    suspend fun getProfile(): ProfileDTO {
-        return api.getProfile()
-    }
-
-    suspend fun updateProfile(profile: ProfileDTO): UserResponse {
-        return api.updateProfile(profile)
-    }
 }

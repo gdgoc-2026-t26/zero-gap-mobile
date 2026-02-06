@@ -26,6 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         // Check if user is logged in
         val sessionManager = gdg.mobile.zero_gap.data.auth.SessionManager(this)
+        
+        // Provide token to NetworkClient
+        gdg.mobile.zero_gap.data.network.NetworkClient.tokenProvider = {
+            sessionManager.fetchAuthToken()
+        }
+
         if (!sessionManager.isLoggedIn()) {
             navController.navigate(R.id.navigation_login)
         }

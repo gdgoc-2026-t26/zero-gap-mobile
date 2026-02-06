@@ -15,13 +15,6 @@ interface ApiService {
     @GET("auth/me")
     suspend fun getMyInfo(): UserResponse
 
-    // App specific placeholders (not in Swagger yet but used in app)
-    @GET("user/profile")
-    suspend fun getProfile(): ProfileDTO
-
-    @POST("user/profile")
-    suspend fun updateProfile(@Body profile: ProfileDTO): UserResponse
-
     // Missions
     @GET("missions")
     suspend fun getMissions(
@@ -31,7 +24,7 @@ interface ApiService {
 
     @GET("missions/today")
     suspend fun getTodayMissionRecommendations(
-        @Query("duration") duration: String // SHORT, MEDIUM, LONG
+        @Query("durationInSeconds") durationInSeconds: Int? = null
     ): MissionRecommendationResponse
 
     @POST("missions")
@@ -45,6 +38,13 @@ interface ApiService {
         @Body request: MissionPatchRequest
     ): MissionPatchResponse
 
+    // Summary
+    @GET("summary")
+    suspend fun getSummary(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String
+    ): SummaryResponse
+
     // Emotions
     @GET("emotions")
     suspend fun getEmotions(
@@ -54,13 +54,6 @@ interface ApiService {
 
     @POST("emotions")
     suspend fun registerEmotion(
-        @Body request: EmotionDTO
+        @Body request: EmotionRequest
     ): EmotionCreateResponse
-
-    // Summary (Placeholder)
-    @GET("summary")
-    suspend fun getSummary(
-        @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
-    ): SummaryResponse
 }
