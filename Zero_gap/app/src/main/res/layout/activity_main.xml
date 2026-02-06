@@ -316,7 +316,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:singleSelection="true">
+                        app:singleSelection="true"
+                        app:selectionRequired="true">
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.Material3.Chip.Filter"
@@ -324,13 +325,15 @@
                             android:layout_height="wrap_content"
                             android:text="5-10분"
                             android:checked="true"
-                            app:chipBackgroundColor="@color/indigo_600"
-                            android:textColor="@color/white" />
+                            app:chipBackgroundColor="@color/chip_background_selector"
+                            android:textColor="@color/chip_text_selector" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.Material3.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            app:chipBackgroundColor="@color/chip_background_selector"
+                            android:textColor="@color/chip_text_selector"
                             android:text="20-30분" />
 
                     </com.google.android.material.chip.ChipGroup>
@@ -718,7 +721,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_gravity="bottom"
         android:background="@color/white"
         app:itemIconTint="@color/slate_800"
