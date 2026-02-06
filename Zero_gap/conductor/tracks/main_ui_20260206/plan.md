@@ -25,7 +25,7 @@ Implement the sticky header and bottom navigation bar.
 ## Phase 3: Dashboard & Content
 Build the scrollable content area with the achievement card and lists.
 
-- [ ] **Task: Achievement Summary Card**
+- [x] **Task: Achievement Summary Card** e11e3b2
     - [ ] Write unit/Espresso tests for card presence and data display.
     - [ ] Implement the gradient card with stats grid.
 - [ ] **Task: Action Challenge List**
