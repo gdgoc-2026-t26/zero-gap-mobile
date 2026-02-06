@@ -14,7 +14,7 @@ Establish the core visual building blocks and ensure system-level UI integration
 ## Phase 2: Shell Layout
 Implement the sticky header and bottom navigation bar.
 
-- [ ] **Task: Implement Top App Bar**
+- [x] **Task: Implement Top App Bar** e72be8b
     - [ ] Write Espresso tests for header visibility and elements.
     - [ ] Create the header layout XML with logo, title, and icons.
 - [ ] **Task: Implement Bottom Navigation Bar**
