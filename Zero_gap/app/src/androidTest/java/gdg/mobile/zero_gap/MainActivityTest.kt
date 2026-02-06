@@ -27,4 +27,9 @@ class MainActivityTest {
         onView(withId(R.id.btnNotifications)).check(matches(isDisplayed()))
         onView(withId(R.id.imgProfile)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun bottomNavigation_isDisplayed() {
+        onView(withId(R.id.bottomNavigation)).check(matches(isDisplayed()))
+    }
 }
