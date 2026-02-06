@@ -1,0 +1,152 @@
+<html>
+        <head>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" crossorigin="anonymous"></script>
+            <style> * { font-family: 'Pretendard', sans-serif; } </style>
+        </head>
+
+        
+<div class="ui-screen">
+    <div id="app-frame" class="relative w-[390px] min-h-[840px] bg-white text-neutral-900 overflow-clip border border-neutral-200 shadow-2xl mx-auto">
+    <header id="header" class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-100 px-5 py-4 flex justify-between items-center">
+        <h1 id="header-title" class="text-xl font-bold tracking-tight">마인드 챌린지</h1>
+        <div id="header-actions" class="flex gap-4">
+            <button id="btn-search" class="text-neutral-500"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button id="btn-notif" class="text-neutral-500 relative">
+                <i class="fa-solid fa-bell"></i>
+                <span class="absolute -top-1 -right-1 w-2 h-2 bg-black rounded-full border-2 border-white"></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content" class="pb-24">
+        <section id="mental-summary" class="p-5">
+            <div class="bg-neutral-900 text-white rounded-2xl p-6 shadow-sm">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p class="text-sm text-neutral-400 mb-1">오늘의 멘탈 에너지</p>
+                        <h2 class="text-2xl font-bold">75% <span class="text-sm font-normal text-neutral-400 ml-1">안정적임</span></h2>
+                    </div>
+                    <div class="bg-neutral-800 p-3 rounded-xl">
+                        <i class="fa-solid fa-seedling text-xl"></i>
+                    </div>
+                </div>
+                <div class="w-full bg-neutral-800 h-2 rounded-full overflow-hidden">
+                    <div class="bg-white h-full w-3/4"></div>
+                </div>
+                <p class="text-xs text-neutral-400 mt-3 leading-relaxed">
+                    취업 준비로 지친 마음을 돌보는 2025.05의 여정입니다.<br/>오늘도 당신은 충분히 잘하고 있어요.
+                </p>
+            </div>
+        </section>
+
+        <section id="challenge-tabs" class="px-5 mb-6">
+            <div class="flex gap-6 border-b border-neutral-100">
+                <button id="tab-ongoing" class="pb-3 border-b-2 border-black font-bold text-sm">참여 중 (3)</button>
+                <button id="tab-explore" class="pb-3 text-neutral-400 font-medium text-sm">새로운 발견</button>
+                <button id="tab-completed" class="pb-3 text-neutral-400 font-medium text-sm">달성 완료</button>
+            </div>
+        </section>
+
+        <section id="active-challenges" class="px-5 space-y-4">
+            <div id="card-challenge-1" class="p-4 border border-neutral-200 rounded-2xl flex gap-4 items-center">
+                <div class="w-12 h-12 bg-neutral-100 rounded-xl flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-envelope-open-text text-neutral-600"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-sm">불합격 메일 의연하게 넘기기</h3>
+                    <p class="text-xs text-neutral-500 mt-0.5">3일 연속 수행 중</p>
+                    <div class="flex items-center gap-2 mt-2">
+                        <div class="flex-1 bg-neutral-100 h-1 rounded-full">
+                            <div class="bg-neutral-900 h-full w-2/3"></div>
+                        </div>
+                        <span class="text-[10px] font-medium">6/10</span>
+                    </div>
+                </div>
+                <button class="bg-neutral-900 text-white text-xs px-3 py-2 rounded-lg font-bold">인증</button>
+            </div>
+
+            <div id="card-challenge-2" class="p-4 border border-neutral-200 rounded-2xl flex gap-4 items-center">
+                <div class="w-12 h-12 bg-neutral-100 rounded-xl flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-sun text-neutral-600"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-sm">오전 10시 햇볕 쬐며 산책</h3>
+                    <p class="text-xs text-neutral-500 mt-0.5">매일 아침 활력 충전</p>
+                    <div class="flex items-center gap-2 mt-2">
+                        <div class="flex-1 bg-neutral-100 h-1 rounded-full">
+                            <div class="bg-neutral-900 h-full w-1/2"></div>
+                        </div>
+                        <span class="text-[10px] font-medium">5/10</span>
+                    </div>
+                </div>
+                <button class="bg-neutral-900 text-white text-xs px-3 py-2 rounded-lg font-bold">인증</button>
+            </div>
+
+            <div id="card-challenge-3" class="p-4 border border-neutral-200 rounded-2xl flex gap-4 items-center">
+                <div class="w-12 h-12 bg-neutral-100 rounded-xl flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-pen-nib text-neutral-600"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-sm">나만의 강점 3가지 기록</h3>
+                    <p class="text-xs text-neutral-500 mt-0.5">자존감 회복 프로젝트</p>
+                    <div class="flex items-center gap-2 mt-2">
+                        <div class="flex-1 bg-neutral-100 h-1 rounded-full">
+                            <div class="bg-neutral-900 h-full w-1/5"></div>
+                        </div>
+                        <span class="text-[10px] font-medium">1/5</span>
+                    </div>
+                </div>
+                <button class="bg-neutral-900 text-white text-xs px-3 py-2 rounded-lg font-bold">인증</button>
+            </div>
+        </section>
+
+        <section id="recommend-section" class="mt-8 px-5">
+            <div class="flex justify-between items-end mb-4">
+                <h2 class="font-bold text-lg">추천 마인드셋</h2>
+                <button class="text-xs text-neutral-400">전체보기</button>
+            </div>
+            <div id="recommend-scroll" class="flex gap-4 overflow-hidden">
+                <div id="rec-card-1" class="w-64 shrink-0 border border-neutral-100 bg-neutral-50 rounded-2xl p-4">
+                    <span class="text-[10px] font-bold bg-white px-2 py-1 rounded border border-neutral-200">심리 방역</span>
+                    <h4 class="font-bold text-sm mt-3">SNS와 나를 분리하는 시간</h4>
+                    <p class="text-xs text-neutral-500 mt-1">남들의 합격 소식에 흔들리지 않기</p>
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                            <img src="https://api.dicebear.com/9.x/notionists/svg?scale=200&seed=12" class="w-6 h-6 rounded-full border-2 border-white bg-neutral-200" />
+                            <img src="https://api.dicebear.com/9.x/notionists/svg?scale=200&seed=45" class="w-6 h-6 rounded-full border-2 border-white bg-neutral-200" />
+                            <div class="w-6 h-6 rounded-full border-2 border-white bg-neutral-300 flex items-center justify-center text-[8px] font-bold">+128</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-neutral-300 text-xs"></i>
+                    </div>
+                </div>
+                <div id="rec-card-2" class="w-16 shrink-0 border border-neutral-100 bg-neutral-50 rounded-2xl p-4 opacity-50">
+                    <div class="w-full h-2 bg-neutral-200 rounded"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav id="bottom-navigation" class="absolute bottom-0 w-full bg-white border-t border-neutral-100 px-6 py-3 flex justify-between items-center z-50">
+        <button id="nav-home" class="flex flex-col items-center gap-1 text-neutral-400">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span class="text-[10px] font-medium">홈</span>
+        </button>
+        <button id="nav-challenge" class="flex flex-col items-center gap-1 text-black">
+            <i class="fa-solid fa-trophy text-lg"></i>
+            <span class="text-[10px] font-bold">챌린지</span>
+        </button>
+        <button id="nav-community" class="flex flex-col items-center gap-1 text-neutral-400">
+            <i class="fa-solid fa-users text-lg"></i>
+            <span class="text-[10px] font-medium">커뮤니티</span>
+        </button>
+        <button id="nav-profile" class="flex flex-col items-center gap-1 text-neutral-400">
+            <img src="https://api.dicebear.com/9.x/notionists/svg?scale=200&seed=88" class="w-5 h-5 rounded-full bg-neutral-100" />
+            <span class="text-[10px] font-medium">마이</span>
+        </button>
+    </nav>
+</div>
+</div>
+
+</html>
