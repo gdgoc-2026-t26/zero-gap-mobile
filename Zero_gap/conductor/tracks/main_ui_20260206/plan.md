@@ -11,7 +11,7 @@ Establish the core visual building blocks and ensure system-level UI integration
     - [ ] Add inset handling for the main container.
 - [x] **Task: Conductor - User Manual Verification 'Foundation & Theme' (Protocol in workflow.md)** b1298ec
 
-## Phase 2: Shell Layout
+## Phase 2: Shell Layout [checkpoint: 806f3e5]
 Implement the sticky header and bottom navigation bar.
 
 - [x] **Task: Implement Top App Bar** e72be8b
@@ -20,7 +20,7 @@ Implement the sticky header and bottom navigation bar.
 - [x] **Task: Implement Bottom Navigation Bar** b305dd7
     - [ ] Write Espresso tests for bottom nav existence and items.
     - [ ] Create the bottom navigation menu and view.
-- [ ] **Task: Conductor - User Manual Verification 'Shell Layout' (Protocol in workflow.md)**
+- [x] **Task: Conductor - User Manual Verification 'Shell Layout' (Protocol in workflow.md)** 806f3e5
 
 ## Phase 3: Dashboard & Content
 Build the scrollable content area with the achievement card and lists.
