@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Zero_gap"
 include(":app")
- 

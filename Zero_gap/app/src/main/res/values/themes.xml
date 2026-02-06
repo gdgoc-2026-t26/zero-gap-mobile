@@ -2,14 +2,43 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Zero_gap" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/indigo_600</item>
-        <item name="android:windowBackground">@color/background_gray</item>
-        <item name="colorSurface">@color/white</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/surface_white</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.Zero_gap" parent="Base.Theme.Zero_gap" />
 
     <style name="ShapeAppearance.Zero_gap.Circle" parent="">
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Widget.Zero_gap.RadioButton.Score" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/bg_emotion_selector</item>
+        <item name="android:buttonTint">@color/score_text_selector</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textSize">0sp</item>
+        <item name="android:stateListAnimator">@animator/click_feedback</item>
+    </style>
+
+    <style name="Widget.Zero_gap.Chip.Small" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background_selector</item>
+        <item name="android:textColor">@color/chip_text_selector</item>
+        <item name="android:textSize">11sp</item>
+        <item name="chipMinTouchTargetSize">0dp</item>
+        <item name="chipMinHeight">28dp</item>
+        <item name="chipStartPadding">8dp</item>
+        <item name="chipEndPadding">8dp</item>
+    </style>
+
+    <style name="Widget.Zero_gap.Chip.Filter" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background_selector</item>
+        <item name="android:textColor">@color/chip_text_selector</item>
     </style>
 </resources>

@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zero_gap">
         <activity
-            android:name=".KawaiActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

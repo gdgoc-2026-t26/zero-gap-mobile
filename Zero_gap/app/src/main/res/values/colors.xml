@@ -2,9 +2,30 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="indigo_600">#6366F1</color>
-    <color name="indigo_200">#C7D2FE</color>
+
+    <!-- Zero-Gap Palette -->
+    <color name="primary">#6366F1</color>
+    <color name="primary_variant">#4338CA</color>
+    <color name="secondary">#A855F7</color>
+    <color name="background">#F9FAFB</color>
+    <!-- Slate Palette -->
     <color name="slate_900">#0F172A</color>
     <color name="slate_800">#1E293B</color>
-    <color name="background_gray">#F9FAFB</color>
+    <color name="slate_700">#334155</color>
+    <color name="slate_600">#475569</color>
+    <color name="slate_500">#64748B</color>
+    
+    <!-- Indigo Palette -->
+    <color name="indigo_900">#312E81</color>
+    <color name="indigo_700">#4338CA</color>
+    <color name="indigo_600">#4F46E5</color>
+    <color name="indigo_500">#6366F1</color>
+    <color name="indigo_400">#818CF8</color>
+    <color name="indigo_300">#A5B4FC</color>
+    <color name="indigo_200">#C7D2FE</color>
+    <color name="indigo_100">#E0E7FF</color>
+    <color name="indigo_50">#EEF2FF</color>
+
+    <color name="background_gray">#F8FAFC</color>
+    <color name="surface_white">#FFFFFF</color>
 </resources>
