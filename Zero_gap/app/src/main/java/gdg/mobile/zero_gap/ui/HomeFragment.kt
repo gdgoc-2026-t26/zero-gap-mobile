@@ -49,7 +49,21 @@ class HomeFragment : Fragment() {
         homeViewModel.fetchStats()
         
         binding.btnRecordEmotion.setOnClickListener {
-            findNavController().navigate(gdg.mobile.zero_gap.R.id.action_home_to_diary)
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(gdg.mobile.zero_gap.R.id.navigation_home, false, true)
+                .build()
+            findNavController().navigate(gdg.mobile.zero_gap.R.id.navigation_diary, null, navOptions)
+        }
+
+        binding.imgProfile.setOnClickListener {
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(gdg.mobile.zero_gap.R.id.navigation_home, false, true)
+                .build()
+            findNavController().navigate(gdg.mobile.zero_gap.R.id.navigation_my, null, navOptions)
         }
     }
 
@@ -94,19 +108,76 @@ class HomeFragment : Fragment() {
                 )
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            homeViewModel.showAlert.collectLatest { show ->
+                binding.alertReengagement.visibility = if (show) View.VISIBLE else View.GONE
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            homeViewModel.todayDiary.collectLatest { content ->
+                binding.tvTodayDiary.text = content ?: "오늘의 일기를 작성해보세요!"
+                binding.tvTodayDiary.alpha = if (content != null) 1.0f else 0.5f
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            homeViewModel.weeklyEmotionScores.collectLatest { scores ->
+                updateEmotionGraph(scores)
+            }
+        }
     }
 
+    private fun updateEmotionGraph(scores: List<Int>) {
+        val bars = listOf(
+            binding.barMon, binding.barTue, binding.barWed, 
+            binding.barThu, binding.barFri, binding.barSat, binding.barSun
+        )
+        // Map scores to heights (e.g., score 1 = 20dp, 5 = 100dp)
+        scores.forEachIndexed { index, score ->
+            if (index < bars.size) {
+                val params = bars[index].layoutParams
+                params.height = (score * 20).toPx() // Changed to toPx and reduced scale
+                bars[index].layoutParams = params
+            }
+        }
+    }
+
+    private fun Int.toPx(): Int = (this * resources.displayMetrics.density).toInt()
+
     private fun updateChallengeCards(recommendations: List<String>) {
-        // Since we have a static UI with 3 chips, we map the list to them
+        mappingChallengeClick(binding.cardChallengeAction, recommendations.getOrNull(0))
+        mappingChallengeClick(binding.cardChallengeEmotion, recommendations.getOrNull(1))
+        mappingChallengeClick(binding.cardChallengeMindset, recommendations.getOrNull(2))
+
         if (recommendations.isNotEmpty()) {
             binding.chipChallengeAction.text = recommendations.getOrNull(0) ?: "공백"
             binding.chipChallengeEmotion.text = recommendations.getOrNull(1) ?: "공백"
             binding.chipChallengeMindset.text = recommendations.getOrNull(2) ?: "공백"
             
-            // Show cards if they were hidden, or just update text
             binding.cardChallengeAction.visibility = if (recommendations.size > 0) View.VISIBLE else View.GONE
             binding.cardChallengeEmotion.visibility = if (recommendations.size > 1) View.VISIBLE else View.GONE
             binding.cardChallengeMindset.visibility = if (recommendations.size > 2) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun mappingChallengeClick(card: View, missionTitle: String?) {
+        card.setOnClickListener {
+            missionTitle?.let { title ->
+                val bundle = Bundle().apply {
+                    putString("mission_title", title)
+                }
+                
+                // Mirror the NavOptions used by NavigationUI for tab switches
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .setRestoreState(true)
+                    .setPopUpTo(gdg.mobile.zero_gap.R.id.navigation_home, false, true)
+                    .build()
+                    
+                findNavController().navigate(gdg.mobile.zero_gap.R.id.navigation_challenge, bundle, navOptions)
+            }
         }
     }
 

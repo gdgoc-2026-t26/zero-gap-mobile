@@ -18,9 +18,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         
+        // Use standard NavComponent integration.
+        // This handles selection syncing and top-level navigation naturally.
         navView.setupWithNavController(navController)
+
+        // Check if user is logged in
+        val sessionManager = gdg.mobile.zero_gap.data.auth.SessionManager(this)
+        if (!sessionManager.isLoggedIn()) {
+            navController.navigate(R.id.navigation_login)
+        }
     }
 }

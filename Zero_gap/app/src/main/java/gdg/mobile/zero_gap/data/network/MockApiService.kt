@@ -79,6 +79,12 @@ class MockApiService : ApiService {
 
     override suspend fun registerMission(request: MissionDTO): MissionRegistrationResponse {
         delay(500)
+        // Idempotency check: if mission with same name and date exists, do nothing
+        val existing = mockMissions.find { it.name == request.name && it.date == request.date }
+        if (existing != null) {
+             return MissionRegistrationResponse(existing.id ?: 0, "이미 등록된 도전입니다!")
+        }
+
         val newId = (mockMissions.maxByOrNull { it.id ?: 0 }?.id ?: 0) + 1
         mockMissions.add(request.copy(id = newId))
         return MissionRegistrationResponse(newId, "새로운 도전을 응원합니다!")
@@ -104,6 +110,9 @@ class MockApiService : ApiService {
 
     override suspend fun registerEmotion(request: EmotionDTO): Map<String, Int> {
         delay(500)
+        // Upsert logic: Remove existing emotion for the same date
+        mockEmotions.removeIf { it.date == request.date }
+        
         val newId = (mockEmotions.maxByOrNull { it.id ?: 0 }?.id ?: 0) + 1
         mockEmotions.add(request.copy(id = newId))
         return mapOf("id" to newId)
@@ -117,5 +126,25 @@ class MockApiService : ApiService {
             Scenario.NEW_USER -> "제로갭에 오신 것을 환영합니다! 오늘부터 당신만의 기록을 채워나가 보세요."
         }
         return SummaryResponse(summary = summary)
+    }
+
+    override suspend fun signup(request: SignupRequest): AuthResponse {
+        delay(500)
+        return AuthResponse(message = "회원가입 성공", token = "mock_token_123")
+    }
+
+    override suspend fun login(request: LoginRequest): AuthResponse {
+        delay(500)
+        return AuthResponse(token = "mock_token_123", user = UserDTO(1, request.email, "사용자"))
+    }
+
+    override suspend fun getProfile(): ProfileDTO {
+        delay(500)
+        return ProfileDTO("개발자", "성장", "열정적", "만취", listOf("코딩", "운동"))
+    }
+
+    override suspend fun updateProfile(profile: ProfileDTO): AuthResponse {
+        delay(500)
+        return AuthResponse(message = "프로필 업데이트 성공", token = "mock_token_123")
     }
 }

@@ -6,7 +6,7 @@
         android:title="홈" />
     <item
         android:id="@+id/navigation_challenge"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@drawable/ic_challenge"
         android:title="챌린지" />
     <item
         android:id="@+id/navigation_diary"

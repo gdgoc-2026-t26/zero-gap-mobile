@@ -43,4 +43,29 @@
         android:label="마이"
         tools:layout="@layout/fragment_my" />
 
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="gdg.mobile.zero_gap.ui.auth.LoginFragment"
+        android:label="로그인"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_signup"
+            app:destination="@id/navigation_signup" />
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_login"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_signup"
+        android:name="gdg.mobile.zero_gap.ui.auth.SignupFragment"
+        android:label="회원가입"
+        tools:layout="@layout/fragment_signup">
+        <action
+            android:id="@+id/action_signup_to_login"
+            app:destination="@id/navigation_login" />
+    </fragment>
+
 </navigation>

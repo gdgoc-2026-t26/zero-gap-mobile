@@ -21,12 +21,22 @@ class HomeViewModel : ViewModel() {
     private val _isTodaySuccess = MutableStateFlow(false)
     val isTodaySuccess: StateFlow<Boolean> = _isTodaySuccess.asStateFlow()
 
+    private val _showAlert = MutableStateFlow(true)
+    val showAlert: StateFlow<Boolean> = _showAlert.asStateFlow()
+
+    private val _todayDiary = MutableStateFlow<String?>(null)
+    val todayDiary: StateFlow<String?> = _todayDiary.asStateFlow()
+
+    private val _weeklyEmotionScores = MutableStateFlow<List<Int>>(emptyList())
+    val weeklyEmotionScores: StateFlow<List<Int>> = _weeklyEmotionScores.asStateFlow()
+
     fun fetchStats() {
         viewModelScope.launch {
             try {
-                // Fetch for the current month roughly
-                val startDate = "2026-02-01"
-                val endDate = "2026-02-28"
+                val calendar = Calendar.getInstance()
+                val endDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+                calendar.add(Calendar.DAY_OF_YEAR, -7)
+                val startDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
                 val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
                 val missionsResponse = NetworkClient.apiService.getMissions(startDate, endDate)
@@ -38,12 +48,25 @@ class HomeViewModel : ViewModel() {
                 // 2. Average emotion score
                 val scores = emotionsResponse.emotions.map { it.score }
                 _averageEmotionScore.value = if (scores.isNotEmpty()) scores.average() else 0.0
+                
+                // Weekly scores for graph
+                _weeklyEmotionScores.value = emotionsResponse.emotions.takeLast(7).map { it.score }
 
-                // 3. Today success (if at least one mission is completed today)
-                // In mock mode, we look for today's date in missions
+                // 3. Today success
                 _isTodaySuccess.value = missionsResponse.missions.any { 
                     it.date == today && it.accomplished 
                 }
+
+                // 4. Alert visibility: if any achievement in last 3 days
+                val threeDaysAgo = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -3) }.time
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val recentAchievement = missionsResponse.missions.any { mission ->
+                    mission.accomplished && mission.date?.let { sdf.parse(it)?.after(threeDaysAgo) } == true
+                }
+                _showAlert.value = !recentAchievement
+
+                // 5. Today's diary
+                _todayDiary.value = emotionsResponse.emotions.find { it.date == today }?.description
 
             } catch (e: Exception) {
                 // Log error

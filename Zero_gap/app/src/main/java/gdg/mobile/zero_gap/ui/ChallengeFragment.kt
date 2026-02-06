@@ -17,6 +17,9 @@ import kotlinx.coroutines.flow.collectLatest
 import androidx.fragment.app.viewModels
 import gdg.mobile.zero_gap.data.repository.ChallengeRepository
 import gdg.mobile.zero_gap.ui.viewmodel.ChallengeViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ChallengeFragment : Fragment() {
     private var _binding: FragmentChallengeBinding? = null
@@ -37,9 +40,36 @@ class ChallengeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fetchMissions()
+        
+        arguments?.getString("mission_title")?.let { title ->
+             registerAndFetch(title)
+             // arguments?.remove("mission_title") // Removed: Handled by API idempotency now
+        } ?: run {
+            fetchMissions()
+        }
+        
         observeViewModel()
         viewModel.fetchMentalEnergy()
+    }
+
+    private fun registerAndFetch(title: String) {
+        lifecycleScope.launch {
+            try {
+                // Register the mission via repository/API
+                val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                NetworkClient.apiService.registerMission(gdg.mobile.zero_gap.data.model.MissionDTO(
+                    id = 0, // Server generates ID
+                    name = title,
+                    date = today,
+                    accomplished = false,
+                    description = null
+                ))
+                fetchMissions() // Refresh list
+            } catch (e: Exception) {
+                Toast.makeText(context, "미션 등록 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                fetchMissions()
+            }
+        }
     }
 
     private fun observeViewModel() {

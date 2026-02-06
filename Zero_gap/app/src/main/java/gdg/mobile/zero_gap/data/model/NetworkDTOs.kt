@@ -41,3 +41,34 @@ data class EmotionResponse(
 data class SummaryResponse(
     @SerializedName("summary") val summary: String
 )
+
+data class SignupRequest(
+    @SerializedName("email") val email: String,
+    @SerializedName("password") val password: String,
+    @SerializedName("name") val name: String
+)
+
+data class LoginRequest(
+    @SerializedName("email") val email: String,
+    @SerializedName("password") val password: String
+)
+
+data class AuthResponse(
+    @SerializedName("message") val message: String? = null,
+    @SerializedName("token") val token: String,
+    @SerializedName("user") val user: UserDTO? = null
+)
+
+data class UserDTO(
+    @SerializedName("id") val id: Int,
+    @SerializedName("email") val email: String,
+    @SerializedName("name") val name: String
+)
+
+data class ProfileDTO(
+    @SerializedName("job") val job: String,
+    @SerializedName("focus") val focus: String,
+    @SerializedName("trait") val trait: String,
+    @SerializedName("goal") val goal: String,
+    @SerializedName("interests") val interests: List<String>
+)
