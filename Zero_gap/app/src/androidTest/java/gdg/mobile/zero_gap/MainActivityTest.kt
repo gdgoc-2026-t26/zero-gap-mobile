@@ -20,4 +20,11 @@ class MainActivityTest {
     fun mainActivity_isDisplayed() {
         onView(withId(R.id.main)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun topAppBar_elementsAreDisplayed() {
+        onView(withId(R.id.topAppBar)).check(matches(isDisplayed()))
+        onView(withId(R.id.btnNotifications)).check(matches(isDisplayed()))
+        onView(withId(R.id.imgProfile)).check(matches(isDisplayed()))
+    }
 }
