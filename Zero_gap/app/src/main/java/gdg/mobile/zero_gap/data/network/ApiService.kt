@@ -6,54 +6,58 @@ import retrofit2.http.*
 interface ApiService {
     
     // Auth & Profile
-    @POST("auth/signup")
-    suspend fun signup(@Body request: SignupRequest): AuthResponse
+    @POST("users")
+    suspend fun signup(@Body request: UserSignUpRequest): UserResponse
 
     @POST("auth/login")
-    suspend fun login(@Body request: LoginRequest): AuthResponse
+    suspend fun login(@Body request: LoginRequest): LoginResponse
 
+    @GET("auth/me")
+    suspend fun getMyInfo(): UserResponse
+
+    // App specific placeholders (not in Swagger yet but used in app)
     @GET("user/profile")
     suspend fun getProfile(): ProfileDTO
 
     @POST("user/profile")
-    suspend fun updateProfile(@Body profile: ProfileDTO): AuthResponse
+    suspend fun updateProfile(@Body profile: ProfileDTO): UserResponse
 
     // Missions
     @GET("missions")
     suspend fun getMissions(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
-    ): MissionResponse
+    ): MissionListResponse
 
     @GET("missions/today")
     suspend fun getTodayMissionRecommendations(
-        @Query("durationInSeconds") durationInSeconds: Int
-    ): TodayMissionResponse
+        @Query("duration") duration: String // SHORT, MEDIUM, LONG
+    ): MissionRecommendationResponse
 
     @POST("missions")
     suspend fun registerMission(
-        @Body request: MissionDTO
-    ): MissionRegistrationResponse
+        @Body request: MissionCreateRequest
+    ): MissionCreateResponse
 
-    @PATCH("missions/{id}")
+    @PATCH("missions/{missionId}")
     suspend fun completeMission(
-        @Path("id") id: Int,
-        @Body request: Map<String, Any> // For accomplished and description
-    ): MissionSuccessResponse
+        @Path("missionId") missionId: String,
+        @Body request: MissionPatchRequest
+    ): MissionPatchResponse
 
     // Emotions
     @GET("emotions")
     suspend fun getEmotions(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
-    ): EmotionResponse
+    ): EmotionListResponse
 
     @POST("emotions")
     suspend fun registerEmotion(
         @Body request: EmotionDTO
-    ): Map<String, Int> // Returns { "id": Int }
+    ): EmotionCreateResponse
 
-    // Summary
+    // Summary (Placeholder)
     @GET("summary")
     suspend fun getSummary(
         @Query("startDate") startDate: String,

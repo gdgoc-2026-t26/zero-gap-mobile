@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object NetworkClient {
-    private const val BASE_URL = "https://api.zero-gap.com/"
+    private const val BASE_URL = "http://34.50.17.186/"
     private const val USE_MOCK = true // Set to false to use real API
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {

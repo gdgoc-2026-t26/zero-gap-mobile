@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import gdg.mobile.zero_gap.databinding.FragmentChallengeBinding
 
 import androidx.lifecycle.lifecycleScope
@@ -38,15 +39,21 @@ class ChallengeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Listen for challenge addition requests from Home (One-time event)
+        setFragmentResultListener("ADD_MISSION_REQUEST") { _, bundle ->
+            bundle.getString("mission_title")?.let { title ->
+                registerAndFetch(title)
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        arguments?.getString("mission_title")?.let { title ->
-             registerAndFetch(title)
-             // arguments?.remove("mission_title") // Removed: Handled by API idempotency now
-        } ?: run {
-            fetchMissions()
-        }
+        // Initial fetch
+        fetchMissions()
         
         observeViewModel()
         viewModel.fetchMentalEnergy()
@@ -57,13 +64,11 @@ class ChallengeFragment : Fragment() {
             try {
                 // Register the mission via repository/API
                 val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                NetworkClient.apiService.registerMission(gdg.mobile.zero_gap.data.model.MissionDTO(
-                    id = 0, // Server generates ID
+                val request = gdg.mobile.zero_gap.data.model.MissionCreateRequest(
                     name = title,
-                    date = today,
-                    accomplished = false,
-                    description = null
-                ))
+                    date = today
+                )
+                NetworkClient.apiService.registerMission(request)
                 fetchMissions() // Refresh list
             } catch (e: Exception) {
                 Toast.makeText(context, "미션 등록 실패: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -140,7 +145,11 @@ class ChallengeFragment : Fragment() {
         val id = mission.id ?: return
         lifecycleScope.launch {
             try {
-                val response = NetworkClient.apiService.completeMission(id, mapOf("accomplished" to true, "description" to "미션을 완료했습니다!"))
+                val request = gdg.mobile.zero_gap.data.model.MissionPatchRequest(
+                    accomplished = true,
+                    description = "미션을 완료했습니다!"
+                )
+                val response = NetworkClient.apiService.completeMission(id, request)
                 Toast.makeText(requireContext(), response.cheerMessage, Toast.LENGTH_LONG).show()
                 fetchMissions() // Refresh
             } catch (e: Exception) {

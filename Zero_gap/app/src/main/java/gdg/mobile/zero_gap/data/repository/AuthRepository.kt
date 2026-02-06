@@ -6,11 +6,11 @@ import gdg.mobile.zero_gap.data.network.NetworkClient
 class AuthRepository {
     private val api = NetworkClient.apiService
 
-    suspend fun signup(request: SignupRequest): AuthResponse {
+    suspend fun signup(request: UserSignUpRequest): UserResponse {
         return api.signup(request)
     }
 
-    suspend fun login(request: LoginRequest): AuthResponse {
+    suspend fun login(request: LoginRequest): LoginResponse {
         return api.login(request)
     }
 
@@ -18,7 +18,7 @@ class AuthRepository {
         return api.getProfile()
     }
 
-    suspend fun updateProfile(profile: ProfileDTO): AuthResponse {
+    suspend fun updateProfile(profile: ProfileDTO): UserResponse {
         return api.updateProfile(profile)
     }
 }

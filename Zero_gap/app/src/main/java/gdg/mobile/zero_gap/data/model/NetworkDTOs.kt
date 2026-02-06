@@ -3,28 +3,38 @@ package gdg.mobile.zero_gap.data.model
 import com.google.gson.annotations.SerializedName
 
 data class MissionDTO(
-    @SerializedName("id") val id: Int? = null,
+    @SerializedName("id") val id: String? = null, // UUID
     @SerializedName("name") val name: String,
     @SerializedName("date") val date: String,
     @SerializedName("accomplished") val accomplished: Boolean = false,
     @SerializedName("description") val description: String? = null
 )
 
-data class MissionResponse(
+data class MissionCreateRequest(
+    @SerializedName("name") val name: String,
+    @SerializedName("date") val date: String
+)
+
+data class MissionCreateResponse(
+    @SerializedName("id") val id: String,
+    @SerializedName("cheerMessage") val cheerMessage: String
+)
+
+data class MissionPatchRequest(
+    @SerializedName("accomplished") val accomplished: Boolean,
+    @SerializedName("description") val description: String? = null
+)
+
+data class MissionPatchResponse(
+    @SerializedName("cheerMessage") val cheerMessage: String
+)
+
+data class MissionListResponse(
     @SerializedName("missions") val missions: List<MissionDTO>
 )
 
-data class TodayMissionResponse(
+data class MissionRecommendationResponse(
     @SerializedName("missionRecommendations") val missionRecommendations: List<String>
-)
-
-data class MissionRegistrationResponse(
-    @SerializedName("id") val id: Int,
-    @SerializedName("cheerMessage") val cheerMessage: String
-)
-
-data class MissionSuccessResponse(
-    @SerializedName("cheerMessage") val cheerMessage: String
 )
 
 data class EmotionDTO(
@@ -34,7 +44,11 @@ data class EmotionDTO(
     @SerializedName("description") val description: String
 )
 
-data class EmotionResponse(
+data class EmotionCreateResponse(
+    @SerializedName("id") val id: Long
+)
+
+data class EmotionListResponse(
     @SerializedName("emotions") val emotions: List<EmotionDTO>
 )
 
@@ -42,7 +56,7 @@ data class SummaryResponse(
     @SerializedName("summary") val summary: String
 )
 
-data class SignupRequest(
+data class UserSignUpRequest(
     @SerializedName("email") val email: String,
     @SerializedName("password") val password: String,
     @SerializedName("name") val name: String
@@ -53,17 +67,17 @@ data class LoginRequest(
     @SerializedName("password") val password: String
 )
 
-data class AuthResponse(
-    @SerializedName("message") val message: String? = null,
-    @SerializedName("token") val token: String,
-    @SerializedName("user") val user: UserDTO? = null
+data class LoginResponse(
+    @SerializedName("accessToken") val accessToken: String
 )
 
-data class UserDTO(
-    @SerializedName("id") val id: Int,
+data class UserResponse(
+    @SerializedName("id") val id: Long,
     @SerializedName("email") val email: String,
     @SerializedName("name") val name: String
 )
+
+// Retained current profile DTO as it's not in swagger yet but used in app
 
 data class ProfileDTO(
     @SerializedName("job") val job: String,

@@ -48,7 +48,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/ic_launcher_background"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Zero_gap.Circle"
-                app:strokeColor="@color/slate_500"
+                app:strokeColor="@color/surface_white"
                 app:strokeWidth="2dp"
                 android:layout_marginBottom="16dp"/>
 

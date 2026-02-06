@@ -37,7 +37,8 @@ class ChallengeViewModel(private val repository: ChallengeRepository) : ViewMode
             try {
                 // Derived from average emotion score * 20 (assuming 1-5 scale)
                 val response = NetworkClient.apiService.getEmotions("2026-02-01", "2026-02-28")
-                val average = if (response.emotions.isNotEmpty()) response.emotions.map { it.score }.average() else 3.0
+                val emotions = response.emotions
+                val average = if (emotions.isNotEmpty()) emotions.map { it.score }.average() else 3.0
                 _mentalEnergy.value = (average * 20).toInt().coerceIn(0, 100)
             } catch (e: Exception) {
                 _mentalEnergy.value = 50
@@ -48,7 +49,12 @@ class ChallengeViewModel(private val repository: ChallengeRepository) : ViewMode
     fun fetchRecommendations(durationMinutes: Int) {
         viewModelScope.launch {
             try {
-                _recommendations.value = repository.getRecommendations(durationMinutes)
+                val durationEnum = when {
+                    durationMinutes <= 10 -> "SHORT"
+                    durationMinutes <= 40 -> "MEDIUM"
+                    else -> "LONG"
+                }
+                _recommendations.value = repository.getRecommendations(durationEnum)
             } catch (e: Exception) {
                 // Handle error
             }

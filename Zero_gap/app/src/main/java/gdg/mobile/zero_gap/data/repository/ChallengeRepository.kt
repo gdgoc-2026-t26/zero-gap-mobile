@@ -3,14 +3,15 @@ package gdg.mobile.zero_gap.data.repository
 import gdg.mobile.zero_gap.R
 import gdg.mobile.zero_gap.data.model.Challenge
 import gdg.mobile.zero_gap.data.model.ChallengeCategory
+import gdg.mobile.zero_gap.data.model.MissionPatchRequest
 import gdg.mobile.zero_gap.data.network.NetworkClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class ChallengeRepository {
 
-    suspend fun getRecommendations(durationMinutes: Int): List<String> {
-        val response = NetworkClient.apiService.getTodayMissionRecommendations(durationMinutes * 60)
+    suspend fun getRecommendations(duration: String): List<String> {
+        val response = NetworkClient.apiService.getTodayMissionRecommendations(duration)
         return response.missionRecommendations
     }
 
@@ -28,8 +29,8 @@ class ChallengeRepository {
         emit(challenges)
     }
 
-    suspend fun completeMission(id: Int, accomplished: Boolean, description: String): String {
-        val request = mapOf("accomplished" to accomplished, "description" to description)
+    suspend fun completeMission(id: String, accomplished: Boolean, description: String? = null): String {
+        val request = MissionPatchRequest(accomplished, description)
         val response = NetworkClient.apiService.completeMission(id, request)
         return response.cheerMessage
     }

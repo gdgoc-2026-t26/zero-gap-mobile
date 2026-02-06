@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import gdg.mobile.zero_gap.data.repository.ChallengeRepository
@@ -165,18 +166,19 @@ class HomeFragment : Fragment() {
     private fun mappingChallengeClick(card: View, missionTitle: String?) {
         card.setOnClickListener {
             missionTitle?.let { title ->
-                val bundle = Bundle().apply {
+                // Use Fragment Result API for one-time event
+                setFragmentResult("ADD_MISSION_REQUEST", Bundle().apply {
                     putString("mission_title", title)
-                }
+                })
                 
-                // Mirror the NavOptions used by NavigationUI for tab switches
+                // Restore standard NavOptions for BottomNavigationView compatibility
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setLaunchSingleTop(true)
                     .setRestoreState(true)
                     .setPopUpTo(gdg.mobile.zero_gap.R.id.navigation_home, false, true)
                     .build()
                     
-                findNavController().navigate(gdg.mobile.zero_gap.R.id.navigation_challenge, bundle, navOptions)
+                findNavController().navigate(gdg.mobile.zero_gap.R.id.navigation_challenge, null, navOptions)
             }
         }
     }

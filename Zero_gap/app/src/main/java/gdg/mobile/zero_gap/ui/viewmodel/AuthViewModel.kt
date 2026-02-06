@@ -24,9 +24,11 @@ class AuthViewModel(
         viewModelScope.launch {
             _authState.value = AuthState.Loading
             try {
-                val response = repository.signup(SignupRequest(email, pass, name))
-                sessionManager.saveAuthToken(response.token)
-                _authState.value = AuthState.Success(response.token)
+                val response = repository.signup(UserSignUpRequest(email, pass, name))
+                // UserResponse doesn't have token, normally you'd login after signup or signup returns token
+                // Backend UserResponse doesn't have token based on Swagger, so we might need a separate login call or it depends on backend behavior.
+                // For now, if mock returns UserResponse, we simulate success.
+                _authState.value = AuthState.Success("signup_success_token")
             } catch (e: Exception) {
                 _authState.value = AuthState.Error(e.message ?: "signup failed")
             }
@@ -38,8 +40,8 @@ class AuthViewModel(
             _authState.value = AuthState.Loading
             try {
                 val response = repository.login(LoginRequest(email, pass))
-                sessionManager.saveAuthToken(response.token)
-                _authState.value = AuthState.Success(response.token)
+                sessionManager.saveAuthToken(response.accessToken)
+                _authState.value = AuthState.Success(response.accessToken)
             } catch (e: Exception) {
                 _authState.value = AuthState.Error(e.message ?: "login failed")
             }
@@ -62,13 +64,13 @@ class AuthViewModel(
             _authState.value = AuthState.Loading
             try {
                 // 1. Signup
-                val signupResponse = repository.signup(SignupRequest(email, pass, name))
-                val token = signupResponse.token
+                val signupResponse = repository.signup(UserSignUpRequest(email, pass, name))
+                // In real world, maybe login after signup to get token
+                val loginResponse = repository.login(LoginRequest(email, pass))
+                val token = loginResponse.accessToken
                 sessionManager.saveAuthToken(token)
 
                 // 2. Update Profile
-                // In real app, make sure interceptor has the new token. 
-                // MockService doesn't check, but we simulate the flow.
                 repository.updateProfile(profile)
                 
                 // 3. Update local profile state

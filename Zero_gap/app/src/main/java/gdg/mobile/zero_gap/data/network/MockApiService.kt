@@ -12,7 +12,7 @@ class MockApiService : ApiService {
     }
 
     companion object {
-        private var currentScenario = Scenario.STRUGGLING // Changed to STRUGGLING by user
+        private var currentScenario = Scenario.PRODUCTIVE
         
         // Dynamic data storage for mock mode
         private val mockMissions = mutableListOf<MissionDTO>()
@@ -24,9 +24,9 @@ class MockApiService : ApiService {
             when (currentScenario) {
                 Scenario.PRODUCTIVE -> {
                     mockMissions.addAll(listOf(
-                        MissionDTO(1, "매일 10분 스트레칭", "2026-02-05", true, "아침 공기 마시며 스트레칭 완료!"),
-                        MissionDTO(2, "코테 1문제 풀기", "2026-02-06", true, "골드 문제 해결!"),
-                        MissionDTO(3, "독서 30분", "2026-02-07", false, null)
+                        MissionDTO("uuid-1", "매일 10분 스트레칭", "2026-02-05", true, "아침 공기 마시며 스트레칭 완료!"),
+                        MissionDTO("uuid-2", "코테 1문제 풀기", "2026-02-06", true, "골드 문제 해결!"),
+                        MissionDTO("uuid-3", "독서 30분", "2026-02-07", false, null)
                     ))
                     mockEmotions.addAll(listOf(
                         EmotionDTO(1, 5, "2026-02-07", "성취감이 엄청난 하루였다!"),
@@ -36,8 +36,8 @@ class MockApiService : ApiService {
                 }
                 Scenario.STRUGGLING -> {
                     mockMissions.addAll(listOf(
-                        MissionDTO(1, "침대 정리하기", "2026-02-07", false, null),
-                        MissionDTO(2, "물 1L 마시기", "2026-02-07", false, null)
+                        MissionDTO("uuid-4", "침대 정리하기", "2026-02-07", false, null),
+                        MissionDTO("uuid-5", "물 1L 마시기", "2026-02-07", false, null)
                     ))
                     mockEmotions.addAll(listOf(
                         EmotionDTO(1, 2, "2026-02-07", "오늘은 좀 의욕이 없네..."),
@@ -55,67 +55,65 @@ class MockApiService : ApiService {
         initializeData()
     }
 
-    override suspend fun getMissions(startDate: String, endDate: String): MissionResponse {
+    override suspend fun getMissions(startDate: String, endDate: String): MissionListResponse {
         delay(500)
-        return MissionResponse(missions = mockMissions.toList())
+        return MissionListResponse(missions = mockMissions.toList())
     }
 
-    override suspend fun getTodayMissionRecommendations(durationSec: Int): TodayMissionResponse {
+    override suspend fun getTodayMissionRecommendations(duration: String): MissionRecommendationResponse {
         delay(800)
         val recommendations = when (currentScenario) {
-            Scenario.PRODUCTIVE -> when {
-                durationSec <= 600 -> listOf("고난도 알고리즘 퀴즈", "스쿼트 50개", "기술 블로그 읽기")
-                durationSec <= 1800 -> listOf("사이드 프로젝트 코딩", "영어 아티클 번역", "중강도 웨이트 트레이닝")
+            Scenario.PRODUCTIVE -> when (duration) {
+                "SHORT" -> listOf("고난도 알고리즘 퀴즈", "스쿼트 50개", "기술 블로그 읽기")
+                "MEDIUM" -> listOf("사이드 프로젝트 코딩", "영어 아티클 번역", "중강도 웨이트 트레이닝")
                 else -> listOf("새로운 언어 학습", "전체 코드 리팩토링", "러닝 5km")
             }
-            else -> when {
-                durationSec <= 600 -> listOf("가벼운 명상", "물 한 잔 마시기", "창문 열고 환기하기")
-                durationSec <= 1800 -> listOf("방 정리하기", "좋아하는 노래 듣기", "일기 한 줄 쓰기")
+            else -> when (duration) {
+                "SHORT" -> listOf("가벼운 명상", "물 한 잔 마시기", "창문 열고 환기하기")
+                "MEDIUM" -> listOf("방 정리하기", "좋아하는 노래 듣기", "일기 한 줄 쓰기")
                 else -> listOf("짧은 산책", "따뜻한 차 마시기", "좋아하는 영화 보기")
             }
         }
-        return TodayMissionResponse(missionRecommendations = recommendations)
+        return MissionRecommendationResponse(missionRecommendations = recommendations)
     }
 
-    override suspend fun registerMission(request: MissionDTO): MissionRegistrationResponse {
+    override suspend fun registerMission(request: MissionCreateRequest): MissionCreateResponse {
         delay(500)
-        // Idempotency check: if mission with same name and date exists, do nothing
+        // Idempotency check: if mission with same name and date exists, return existing
         val existing = mockMissions.find { it.name == request.name && it.date == request.date }
         if (existing != null) {
-             return MissionRegistrationResponse(existing.id ?: 0, "이미 등록된 도전입니다!")
+            return MissionCreateResponse(existing.id ?: "", "이미 등록된 도전입니다!")
         }
 
-        val newId = (mockMissions.maxByOrNull { it.id ?: 0 }?.id ?: 0) + 1
-        mockMissions.add(request.copy(id = newId))
-        return MissionRegistrationResponse(newId, "새로운 도전을 응원합니다!")
+        val newId = "uuid-${mockMissions.size + 1}"
+        mockMissions.add(MissionDTO(newId, request.name, request.date, false, null))
+        return MissionCreateResponse(newId, "새로운 도전을 응원합니다!")
     }
 
-    override suspend fun completeMission(id: Int, request: Map<String, Any>): MissionSuccessResponse {
+    override suspend fun completeMission(missionId: String, request: MissionPatchRequest): MissionPatchResponse {
         delay(500)
-        val index = mockMissions.indexOfFirst { it.id == id }
+        val index = mockMissions.indexOfFirst { it.id == missionId }
         if (index != -1) {
             val mission = mockMissions[index]
             mockMissions[index] = mission.copy(
-                accomplished = request["accomplished"] as? Boolean ?: true,
-                description = request["description"] as? String
+                accomplished = request.accomplished,
+                description = request.description
             )
         }
-        return MissionSuccessResponse("축하합니다! 오늘도 한 걸음 성장하셨네요.")
+        return MissionPatchResponse("축하합니다! 오늘도 한 걸음 성장하셨네요.")
     }
 
-    override suspend fun getEmotions(startDate: String, endDate: String): EmotionResponse {
+    override suspend fun getEmotions(startDate: String, endDate: String): EmotionListResponse {
         delay(500)
-        return EmotionResponse(emotions = mockEmotions.toList())
+        return EmotionListResponse(emotions = mockEmotions.toList())
     }
 
-    override suspend fun registerEmotion(request: EmotionDTO): Map<String, Int> {
+    override suspend fun registerEmotion(request: EmotionDTO): EmotionCreateResponse {
         delay(500)
-        // Upsert logic: Remove existing emotion for the same date
         mockEmotions.removeIf { it.date == request.date }
-        
         val newId = (mockEmotions.maxByOrNull { it.id ?: 0 }?.id ?: 0) + 1
         mockEmotions.add(request.copy(id = newId))
-        return mapOf("id" to newId)
+        return EmotionCreateResponse(newId.toLong())
     }
 
     override suspend fun getSummary(startDate: String, endDate: String): SummaryResponse {
@@ -128,14 +126,19 @@ class MockApiService : ApiService {
         return SummaryResponse(summary = summary)
     }
 
-    override suspend fun signup(request: SignupRequest): AuthResponse {
+    override suspend fun signup(request: UserSignUpRequest): UserResponse {
         delay(500)
-        return AuthResponse(message = "회원가입 성공", token = "mock_token_123")
+        return UserResponse(1L, request.email, request.name)
     }
 
-    override suspend fun login(request: LoginRequest): AuthResponse {
+    override suspend fun login(request: LoginRequest): LoginResponse {
         delay(500)
-        return AuthResponse(token = "mock_token_123", user = UserDTO(1, request.email, "사용자"))
+        return LoginResponse(accessToken = "mock_token_123")
+    }
+
+    override suspend fun getMyInfo(): UserResponse {
+        delay(500)
+        return UserResponse(1L, "user@example.com", "사용자")
     }
 
     // Dynamic profile storage
@@ -146,9 +149,9 @@ class MockApiService : ApiService {
         return currentProfile
     }
 
-    override suspend fun updateProfile(profile: ProfileDTO): AuthResponse {
+    override suspend fun updateProfile(profile: ProfileDTO): UserResponse {
         delay(500)
         currentProfile = profile
-        return AuthResponse(message = "프로필 업데이트 성공", token = "mock_token_123")
+        return UserResponse(1L, "user@example.com", "사용자")
     }
 }
