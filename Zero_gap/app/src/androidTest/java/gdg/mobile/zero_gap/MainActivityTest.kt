@@ -38,4 +38,17 @@ class MainActivityTest {
         onView(withId(R.id.cardAchievementSummary)).check(matches(isDisplayed()))
         onView(withId(R.id.tvAchievementTitle)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun reengagementAlert_isDisplayed() {
+        onView(withId(R.id.alertReengagement)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvAlertTitle)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun challengeList_isDisplayed() {
+        onView(withId(R.id.tvChallengeHeader)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvChallenge1)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvChallenge2)).check(matches(isDisplayed()))
+    }
 }

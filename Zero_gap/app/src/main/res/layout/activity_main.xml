@@ -224,6 +224,256 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- Re-engagement Alert -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/alertReengagement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_alert_light_blue"
+                android:padding="16dp">
+
+                <FrameLayout
+                    android:id="@+id/iconContainer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_stat_item"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_seedling"
+                        app:tint="@color/indigo_600" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvAlertTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="다시 시작은 1줄 기록이면 충분합니다"
+                    android:textColor="#4338CA"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iconContainer"
+                    app:layout_constraintTop_toTopOf="@id/iconContainer" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="3일 만에 돌아오셨네요! 가볍게 시작해볼까요?"
+                    android:textColor="@color/indigo_600"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvAlertTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvAlertTitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Action Challenge List -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tvChallengeHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="행동 챌린지"
+                        android:textColor="@color/slate_900"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="지금 바로 가능한 작은 실천"
+                        android:textColor="@color/slate_800"
+                        android:textSize="12sp"
+                        android:alpha="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvChallengeHeader" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5-10분"
+                            android:checked="true"
+                            app:chipBackgroundColor="@color/indigo_600"
+                            android:textColor="@color/white" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20-30분" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Challenge Items -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#F3F4F6">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:id="@+id/challengeIcon1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#FFF7ED"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_code"
+                                app:tint="#F97316" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvChallenge1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="코테 1문제 풀기"
+                            android:textColor="@color/slate_900"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/challengeIcon1"
+                            app:layout_constraintTop_toTopOf="@id/challengeIcon1" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="뇌 풀기용 쉬운 문제"
+                            android:textColor="@color/slate_800"
+                            android:alpha="0.5"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toStartOf="@id/tvChallenge1"
+                            app:layout_constraintTop_toBottomOf="@id/tvChallenge1" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_chevron_right"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:tint="#D1D5DB" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#F3F4F6">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:id="@+id/challengeIcon2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_stat_item"
+                            android:backgroundTint="#EFF6FF"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_file_lines"
+                                app:tint="#3B82F6" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvChallenge2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="이력서 한 줄 수정"
+                            android:textColor="@color/slate_900"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/challengeIcon2"
+                            app:layout_constraintTop_toTopOf="@id/challengeIcon2" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="성과 위주로 다듬기"
+                            android:textColor="@color/slate_800"
+                            android:alpha="0.5"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toStartOf="@id/tvChallenge2"
+                            app:layout_constraintTop_toBottomOf="@id/tvChallenge2" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_chevron_right"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:tint="#D1D5DB" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
             <!-- Placeholder for next tasks -->
             <View
                 android:layout_width="match_parent"
