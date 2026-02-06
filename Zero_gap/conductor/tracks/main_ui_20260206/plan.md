@@ -28,7 +28,7 @@ Build the scrollable content area with the achievement card and lists.
 - [x] **Task: Achievement Summary Card** e11e3b2
     - [ ] Write unit/Espresso tests for card presence and data display.
     - [ ] Implement the gradient card with stats grid.
-- [ ] **Task: Action Challenge List**
+- [x] **Task: Action Challenge List** acacf3c
     - [ ] Write tests for challenge item rendering.
     - [ ] Implement the section with filter buttons and challenge cards.
 - [ ] **Task: Emotional Report Card**
