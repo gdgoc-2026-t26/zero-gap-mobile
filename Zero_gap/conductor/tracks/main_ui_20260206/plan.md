@@ -6,7 +6,7 @@ Establish the core visual building blocks and ensure system-level UI integration
 - [x] **Task: Define Colors and Typography** bd96223
     - [ ] Create `colors.xml` with the indigo and slate palette.
     - [ ] Define the base `Theme.Zero_gap` with Material 3.
-- [ ] **Task: Robust Edge-to-Edge Support**
+- [x] **Task: Robust Edge-to-Edge Support** 23deb79
     - [ ] Implement `enableEdgeToEdge()` in `MainActivity.kt`.
     - [ ] Add inset handling for the main container.
 - [ ] **Task: Conductor - User Manual Verification 'Foundation & Theme' (Protocol in workflow.md)**
